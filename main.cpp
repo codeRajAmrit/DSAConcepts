@@ -1,17 +1,23 @@
 #include <iostream>
+#include <map>
 
-using namespace std; 
+using namespace std;
 
 int main() {
-    int number {}; 
-    cin >> number;
+    int n; 
+    cin >> n; 
+    int numbers[n]; 
+    map <int, int> frequency;
+    pair <int, int> result = {0, 0}; 
     
-    int reversedNumber = 0; 
-    while (number > 0) {
-        reversedNumber = (reversedNumber * 10) + (number % 10); 
-        number = number / 10; 
+    for (int i = 0; i < n; i += 1) {
+        cin >> numbers[i];  
+        frequency[numbers[i]] += 1; 
     }
-    cout << reversedNumber << '\n'; 
 
-    return 0; 
+    for (auto it : frequency) if (it.second > result.second || (it.second == result.second && it.first < result.first)) result = it; 
+
+    cout << result.first << " " << result.second ; 
+
+    return 0;
 }
