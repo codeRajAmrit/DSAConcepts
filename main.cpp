@@ -1,23 +1,33 @@
 #include <iostream>
-#include <map>
-
+#include <unordered_map>
+#include <vector>
 using namespace std;
 
 int main() {
-    int n; 
-    cin >> n; 
-    int numbers[n]; 
-    map <int, int> frequency;
-    pair <int, int> result = {0, 0}; 
-    
-    for (int i = 0; i < n; i += 1) {
-        cin >> numbers[i];  
-        frequency[numbers[i]] += 1; 
+    #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif
+
+    int n, target;
+    cin >> n >> target;
+    vector<int> num(n);
+    unordered_map<int, int> hashMap;
+    for (int i = 0; i < n; i += 1) cin >> num[i];
+
+    // brute forces takes O(n^2)
+    // better approach using hashing. O(n)
+    for (int x : num) hashMap[x] += 1;
+
+    int cnt = 0;
+
+    for (int x : num) {
+        int q = target - x;
+        if (hashMap[q] > 0) cnt += 1;
     }
 
-    for (auto it : frequency) if (it.second > result.second || (it.second == result.second && it.first < result.first)) result = it; 
-
-    cout << result.first << " " << result.second ; 
+    if (cnt > 0) cout << "TRUE";
+    else cout << "FALSE";
 
     return 0;
 }
