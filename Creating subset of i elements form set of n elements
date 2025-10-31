@@ -1,0 +1,18 @@
+vector<vector<int>> genCombn(vector<int> v, int i, int n) {
+    if (i == n) {
+        vector<vector<int>> result;
+        result.emplace_back(v) ;
+        return result;
+    }
+    vector<vector<int>> ReturnedComb = genCombn(v, i+1, n);
+    vector<vector<int>> combinatons;
+    for (auto comb : ReturnedComb) {
+        for(int i = 0; i < comb.size(); i += 1) {
+            vector<int> dup = comb;
+            dup.erase(dup.begin() + i);
+            if (find(combinatons.begin(), combinatons.end(), dup) == combinatons.end()) combinatons.emplace_back(dup);
+        }
+    }
+    return combinatons;
+
+}
